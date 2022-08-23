@@ -1,16 +1,27 @@
 <template>
   <div class="todo-header">
+    <div>{{ test }}</div>
+    <div>{{ params.val }}</div>
+    <div>{{ params.name }}</div>
+    <div>{{ params.age }}</div>
     <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
   </div>
 </template>
 
 <script>
+import { ref, reactive } from 'vue'
 export default {
   name: "MyHeader",
-  data() {
-    return {};
-  },
-  methods: {},
+  setup () {
+    let test = ref('ref...')
+    let params = reactive({
+      val: 'hello',
+      name: 'zs',
+      age: 18
+    })
+
+    return {test, params}
+  }
 };
 </script>
 
