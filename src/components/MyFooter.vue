@@ -3,16 +3,32 @@
     <label>
       <input type="checkbox" />
     </label>
-    <span> <span>已完成1</span> / 全部1 </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <span> <span>已完成{{ checkedNum }}</span> / 全部{{ list.length }} </span>
+    <button @click="clearChecked" class="btn btn-danger">清除已完成任务</button>
   </div>
 </template>
 
 <script>
+import { ref, computed, inject } from 'vue'
+
 export default {
   name: "MyFooter",
-  computed: {},
-  methods: {},
+  props: ['list'],
+  setup (props) {
+    let list = inject('list')
+    let checkedNum = ref(0)
+
+    checkedNum = computed(() => {
+      return props.list.filter(item => item.checked).length
+    })
+
+    function clearChecked () { // 清楚已完成
+      list = list.filter(item => !item.checked)
+      console.log(list)
+    }
+
+    return { checkedNum, clearChecked }
+  }
 };
 </script>
 

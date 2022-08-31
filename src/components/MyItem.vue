@@ -1,17 +1,34 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" />
-      <span>吃饭</span>
+      <input type="checkbox" :checked="item.checked" @click="check" />
+      <span>{{ item.title }}</span>
     </label>
-    <button class="btn btn-danger">删除</button>
+    <button @click="delItem" class="btn btn-danger">删除</button>
   </li>
 </template>
 
 <script>
+import { inject } from 'vue'
+
 export default {
   name: "MyItem",
-  methods: {},
+  props: ['item'],
+  setup (props) {
+    let list = inject('list')
+
+    function check () { // 选中事件
+      let index = list.findIndex(item => item.id === props.item.id)
+      list[index].checked = !list[index].checked
+    }
+
+    function delItem () { // 删除
+      let index = list.findIndex(item => item.id === props.item.id)
+      list.splice(index, 1)
+    }
+    
+    return { check, delItem }
+  }
 };
 </script>
 

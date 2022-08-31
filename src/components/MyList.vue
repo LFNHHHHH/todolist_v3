@@ -1,6 +1,8 @@
 <template>
   <ul class="todo-main">
-    <MyItem />
+    <template v-for="item in list" :key="item.id">
+      <MyItem :item="item" />
+    </template>
   </ul>
 </template>
 
@@ -9,6 +11,7 @@ import MyItem from "./MyItem";
 export default {
   name: "MyList",
   components: { MyItem },
+  props: ['list'],
 };
 </script>
 

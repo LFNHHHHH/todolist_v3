@@ -1,26 +1,25 @@
 <template>
   <div class="todo-header">
-    <div>{{ test }}</div>
-    <div>{{ params.val }}</div>
-    <div>{{ params.name }}</div>
-    <div>{{ params.age }}</div>
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
+    <input type="text" v-model="params.val" @keydown.enter="add" placeholder="请输入你的任务名称，按回车键确认" />
   </div>
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 export default {
   name: "MyHeader",
-  setup () {
-    let test = ref('ref...')
+  setup (props, context) {
     let params = reactive({
-      val: 'hello',
-      name: 'zs',
-      age: 18
+      val: '',
     })
 
-    return {test, params}
+    function add () {
+      // 获取数据，把数据给APP组件
+      context.emit('add', params.val)
+      params.val = ''
+    }
+
+    return {params, add}
   }
 };
 </script>

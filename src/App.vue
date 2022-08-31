@@ -2,25 +2,50 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader />
-        <MyList />
-        <MyFooter />
+        <MyHeader @add="add" />
+        <MyList :list="list" />
+        <MyFooter :list="list" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive, provide } from 'vue'
 import MyHeader from "./components/MyHeader";
 import MyList from "./components/MyList";
 import MyFooter from "./components/MyFooter.vue";
 export default {
   name: "App",
   components: { MyHeader, MyList, MyFooter },
-  data() {
-    return {};
-  },
-  methods: {},
+  setup () {
+    let list = reactive([
+      {
+        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
+        checked: true,
+        title: '吃饭'
+      }, {
+        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
+        checked: false,
+        title: '睡觉'
+      }, {
+        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
+        checked: false,
+        title: '打豆豆'
+      }
+    ])
+    provide('list', list)
+
+    function add (val) {
+      list.unshift({
+        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
+        checked: false,
+        title: val
+      })
+    }
+
+    return { list, add }
+  }
 };
 </script>
 
