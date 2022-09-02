@@ -23,7 +23,9 @@ export default {
     })
 
     function clearChecked () { // 清楚已完成
-      list = list.filter(item => !item.checked)
+      list.forEach((item, index) => {
+        if (item.checked == true) list.splice(index, 1)
+      })
       console.log(list)
     }
 

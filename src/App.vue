@@ -2,6 +2,7 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
+        {{ list }}
         <MyHeader @add="add" />
         <MyList :list="list" />
         <MyFooter :list="list" />
@@ -43,6 +44,17 @@ export default {
         title: val
       })
     }
+
+    function updataList (val) {
+      console.log("updataList======")
+      console.log(this.list)
+      console.log(val)
+      list = val
+      console.log(list)
+    }
+    provide('updataList', updataList)
+
+    console.log(list)
 
     return { list, add }
   }
