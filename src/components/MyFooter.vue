@@ -23,10 +23,13 @@ export default {
     })
 
     function clearChecked () { // 清除已完成
-    
-      // list.forEach((item, index) => {
-      //   if (item.checked == true) list.splice(index, 1)
-      // })
+      let newList = JSON.parse(JSON.stringify(list))
+      list.length = 0
+
+      newList.forEach(item => {
+        if (item.checked == true) return
+        list.push(item)
+      })
     }
 
     function checkALL (e) { // 全选全不选
