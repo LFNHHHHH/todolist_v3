@@ -1,7 +1,7 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" :checked="checkedNum == list.length" @click="checkALL" />
     </label>
     <span> <span>已完成{{ checkedNum }}</span> / 全部{{ list.length }} </span>
     <button @click="clearChecked" class="btn btn-danger">清除已完成任务</button>
@@ -16,20 +16,28 @@ export default {
   props: ['list'],
   setup (props) {
     let list = inject('list')
-    let checkedNum = ref(0)
 
-    checkedNum = computed(() => {
+    let checkedNum = ref(0)
+    checkedNum = computed(() => { // 计算已完成数量
       return props.list.filter(item => item.checked).length
     })
 
-    function clearChecked () { // 清楚已完成
-      list.forEach((item, index) => {
-        if (item.checked == true) list.splice(index, 1)
-      })
-      console.log(list)
+    function clearChecked () { // 清除已完成
+    
+      // list.forEach((item, index) => {
+      //   if (item.checked == true) list.splice(index, 1)
+      // })
     }
 
-    return { checkedNum, clearChecked }
+    function checkALL (e) { // 全选全不选
+      if (e.target.checked) {
+        list.forEach(item => {item.checked = true})
+      } else {
+        list.forEach(item => {item.checked = false})
+      }
+    }
+
+    return { checkedNum, clearChecked, checkALL }
   }
 };
 </script>

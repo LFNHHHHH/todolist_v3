@@ -24,15 +24,15 @@ export default {
       {
         id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
         checked: true,
-        title: '吃饭'
+        title: '抽烟'
       }, {
         id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
-        checked: false,
-        title: '睡觉'
+        checked: true,
+        title: '喝酒'
       }, {
         id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
-        checked: false,
-        title: '打豆豆'
+        checked: true,
+        title: '烫头'
       }
     ])
     provide('list', list)
@@ -44,15 +44,6 @@ export default {
         title: val
       })
     }
-
-    function updataList (val) {
-      console.log("updataList======")
-      console.log(this.list)
-      console.log(val)
-      list = val
-      console.log(list)
-    }
-    provide('updataList', updataList)
 
     console.log(list)
 
