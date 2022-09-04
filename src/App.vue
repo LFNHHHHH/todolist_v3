@@ -2,7 +2,6 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        {{ list }}
         <MyHeader @add="add" />
         <MyList :list="list" />
         <MyFooter :list="list" />
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import { reactive, provide } from 'vue'
+import { reactive, provide, watch } from 'vue'
 import MyHeader from "./components/MyHeader";
 import MyList from "./components/MyList";
 import MyFooter from "./components/MyFooter.vue";
@@ -20,22 +19,13 @@ export default {
   name: "App",
   components: { MyHeader, MyList, MyFooter },
   setup () {
-    let list = reactive([
-      {
-        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
-        checked: true,
-        title: '抽烟'
-      }, {
-        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
-        checked: true,
-        title: '喝酒'
-      }, {
-        id: new Date().getTime() + parseInt(Math.random() * new Date().getTime()),
-        checked: true,
-        title: '烫头'
-      }
-    ])
+    let localList = JSON.parse(localStorage.getItem('list')) || []
+    let list = reactive(localList)
     provide('list', list)
+
+    watch(list, val => {
+      localStorage.setItem('list', JSON.stringify(val))
+    })
 
     function add (val) {
       list.unshift({
@@ -44,8 +34,6 @@ export default {
         title: val
       })
     }
-
-    console.log(list)
 
     return { list, add }
   }
